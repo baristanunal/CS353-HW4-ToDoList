@@ -4,8 +4,8 @@
 <body>
     <table>
         <tr>
-            {% for attribute in task_attributes %}
-            <th>{{ attribute }}</th>
+            {% for column_name in users_tasks[0] %}
+            <th>{{ column_name }}</th>
             {% endfor %}
         </tr>
 

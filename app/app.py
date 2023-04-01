@@ -71,14 +71,12 @@ def register():
 def tasks():
 
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-    task_attributes = ('id', 'title', 'description', 'status', 'deadline', 'creation_time',
-                       'done_time', 'user_id', 'task_type')
 
     cursor.execute('SELECT * FROM Task WHERE user_id = % s', (session['userid'],))
     users_tasks = cursor.fetchall()
     print(users_tasks)
 
-    return render_template('tasks.html', task_attributes=task_attributes, users_tasks=users_tasks )
+    return render_template('tasks.html', users_tasks=users_tasks)
 
 @app.route('/analysis', methods =['GET', 'POST'])
 def analysis():
