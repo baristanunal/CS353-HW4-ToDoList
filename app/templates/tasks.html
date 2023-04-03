@@ -1,23 +1,72 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<body>
-    <table>
-        <tr>
-            {% for column_name in users_tasks[0] %}
-            <th>{{ column_name }}</th>
-            {% endfor %}
-        </tr>
+<style>
+  table, th, td {
+    border: 1px solid white;
+    border-collapse: collapse;
+    border-bottom: 1px solid #DDD;
+  }
+  th, td {
+    #background-color: #A3DEFB;
+    padding: 15px;
+  }
+  tr:hover {background-color: #D6EEEE;}
+</style>
 
-        {% for row in users_tasks %}
-            <tr>
-            {% for cell in row %}
-                <td>
-                    {{ row[cell] }}
-                </td>
-            {% endfor %}
-            </tr>
+<body>
+
+  <div>
+    <h2>ACTIVE TASKS</h2>
+    <table>
+      <tr>
+        {% for column_name in todo_tasks[0] %}
+          <th>{{ column_name }}</th>
         {% endfor %}
+      </tr>
+
+      {% for row in todo_tasks %}
+        <tr>
+          {% for cell in row %}
+            <td>
+              {{ row[cell] }}
+            </td>
+          {% endfor %}
+          <td>
+            <form action="{{ url_for('delete_task') }}" method="post">
+              <button class="btn btn-primary">Delete</button>
+              <input type="text" class="form-control" id="del_id" name="del_id" value={{ row["id"] }}>
+            </form>
+          </td>
+        </tr>
+      {% endfor %}
     </table>
+  </div>
+
+  <h2>DONE TASKS</h2>
+    <table>
+      <tr>
+        {% for column_name in done_tasks[0] %}
+          <th>{{ column_name }}</th>
+        {% endfor %}
+      </tr>
+
+      {% for row in done_tasks %}
+        <tr>
+          {% for cell in row %}
+            <td>
+              {{ row[cell] }}
+            </td>
+          {% endfor %}
+        </tr>
+      {% endfor %}
+    </table>
+  <div>
+
+  </div>
+
+  <form action="{{ url_for('add_task') }}" method="get">
+    <button class="btn btn-primary">Add Task</button>
+  </form>
 
 </body>
