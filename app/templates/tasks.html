@@ -51,6 +51,10 @@
     </table>
   </div>
 
+  <form action="{{ url_for('add_task') }}" method="get">
+    <button class="btn btn-primary">Add Task</button>
+  </form>
+
   <h2>DONE TASKS</h2>
     <table>
       <tr>
@@ -69,16 +73,9 @@
         </tr>
       {% endfor %}
     </table>
-  <div>
 
-  </div>
-
-  <form action="{{ url_for('add_task') }}" method="get">
-    <button class="btn btn-primary">Add Task</button>
-  </form>
-
-  <form action="{{ url_for('logout') }}" method="get">
-    <button class="btn btn-primary">Logout</button>
+  <form action="{{ url_for('analysis') }}" method="get">
+    <button class="btn btn-primary">Analysis Page</button>
   </form>
 
   <form action="{{ url_for('logout') }}" method="get">

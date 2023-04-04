@@ -250,7 +250,57 @@ def finish_task():
 
 @app.route('/analysis', methods=['GET', 'POST'])
 def analysis():
-    return "Analysis page"
+
+    if session['loggedin']:
+
+        user_id = session['userid']
+        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+
+        # 1. List the title and latency of the tasks that were completed after their deadlines (for the user).
+        cursor.execute('SELECT title, TIMESTAMPDIFF(HOUR, deadline, done_time) AS "latency (in hours)" '
+                       'FROM DoneTask '
+                       'WHERE user_id = % s AND (done_time > deadline)', (user_id,))
+        overdue_tasks = cursor.fetchall()
+
+        # 2. Give the average task completion time of the user.
+        cursor.execute('SELECT AVG(TIMESTAMPDIFF(HOUR, creation_time, done_time)) AS "average completion time" '
+                       'FROM DoneTask '
+                       'WHERE user_id = % s', (user_id, ))
+        avg_comp_time = cursor.fetchone()['average completion time']
+
+        # 3. List the number of the completed tasks per task type, in descending order (for the user).
+        cursor.execute('SELECT task_type, COUNT(*) AS "completed tasks" '
+                       'FROM DoneTask '
+                       'WHERE user_id = % s '
+                       'GROUP BY task_type '
+                       'ORDER BY "completed tasks" DESC', (user_id, ))
+        completed_task_count = cursor.fetchall()
+
+        # 4. List the title and deadline of uncompleted tasks in increasing order of deadlines (for the user).
+        cursor.execute('SELECT title, deadline '
+                       'FROM TodoTask '
+                       'WHERE user_id = % s '
+                       'ORDER BY deadline ASC', (user_id, ))
+        todo_tasks = cursor.fetchall()
+
+        # 5. List the title and task completion time of the top 2 completed tasks that took the most time, in
+        #    descending order (for the user).
+        cursor.execute('SELECT title, TIMESTAMPDIFF(HOUR, creation_time, done_time) '
+                       'AS "task completion time (in hours)" '
+                       'FROM DoneTask '
+                       'WHERE user_id = % s '
+                       'ORDER BY "task completion time (in hours)" '
+                       'LIMIT 2', (user_id, ))
+        longest_tasks = cursor.fetchall()
+
+        return render_template('analysis.html', overdue_tasks=overdue_tasks, avg_comp_time=avg_comp_time,
+                               completed_task_count=completed_task_count, todo_tasks=todo_tasks,
+                               longest_tasks=longest_tasks)
+
+    else:
+        return redirect(url_for('login'))
+
+
 
 if __name__ == "__main__":
     port = int(os.environ.get('PORT', 8080))

@@ -1,0 +1,122 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<style>
+  table, th, td {
+    border: 1px solid white;
+    border-collapse: collapse;
+    border-bottom: 1px solid #DDD;
+  }
+  th, td {
+    #background-color: #A3DEFB;
+    padding: 15px;
+  }
+  tr:hover {background-color: #D6EEEE;}
+</style>
+
+<body>
+
+<form action="{{ url_for('tasks') }}" method="get">
+  <button class="btn btn-primary">Back</button>
+</form>
+
+    <div>
+      <h2>Overdue Tasks:</h2>
+      <table>
+        <tr>
+          {% for column_name in overdue_tasks[0] %}
+            <th>{{ column_name }}</th>
+          {% endfor %}
+        </tr>
+
+        {% for row in overdue_tasks %}
+          <tr>
+            {% for cell in row %}
+              <td>
+                {{ row[cell] }}
+              </td>
+            {% endfor %}
+          </tr>
+        {% endfor %}
+      </table>
+    </div>
+
+    <br>
+
+    <div>
+      <h2>Average Task Completion Time (in Hours): </h2>
+      <p>{{ avg_comp_time }}</p>
+    </div>
+
+    <br>
+
+    <div>
+      <h2>Completed Tasks By Type:</h2>
+      <table>
+        <tr>
+          {% for column_name in completed_task_count[0] %}
+            <th>{{ column_name }}</th>
+          {% endfor %}
+        </tr>
+
+        {% for row in completed_task_count %}
+          <tr>
+            {% for cell in row %}
+              <td>
+                {{ row[cell] }}
+              </td>
+            {% endfor %}
+          </tr>
+        {% endfor %}
+      </table>
+    </div>
+
+    <br>
+
+    <div>
+      <h2>Deadlines of Uncompleted Tasks:</h2>
+      <table>
+        <tr>
+          {% for column_name in todo_tasks[0] %}
+            <th>{{ column_name }}</th>
+          {% endfor %}
+        </tr>
+
+        {% for row in todo_tasks %}
+          <tr>
+            {% for cell in row %}
+              <td>
+                {{ row[cell] }}
+              </td>
+            {% endfor %}
+          </tr>
+        {% endfor %}
+      </table>
+    </div>
+
+    <br>
+
+    <div>
+      <h2>Top 2 Longest Completion Times:</h2>
+      <table>
+        <tr>
+          {% for column_name in longest_tasks[0] %}
+            <th>{{ column_name }}</th>
+          {% endfor %}
+        </tr>
+
+        {% for row in longest_tasks %}
+          <tr>
+            {% for cell in row %}
+              <td>
+                {{ row[cell] }}
+              </td>
+            {% endfor %}
+          </tr>
+        {% endfor %}
+      </table>
+    </div>
+
+
+</body>
