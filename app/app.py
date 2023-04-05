@@ -8,7 +8,7 @@ from flask import Flask, render_template, request, redirect, url_for, session
 from flask_mysqldb import MySQL
 import MySQLdb.cursors
 
-app = Flask(__name__)
+app = Flask(__name__, static_url_path='/static', static_folder='static')
 
 app.secret_key = 'abcdefgh'
 
@@ -94,14 +94,13 @@ def tasks():
     if session['loggedin']:
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
 
-        cursor.execute('SELECT * FROM TodoTask '
-                       'WHERE user_id = % s', (session['userid'],))
-        todo_tasks = []
-        for task in cursor.fetchall():
-            new_task = {key: value for key, value in task.items() if key not in ('creation_time', 'user_id')}
-            todo_tasks.append(new_task)
+        cursor.execute('SELECT id, title, description, deadline, creation_time, task_type '
+                       'FROM TodoTask '
+                       'WHERE user_id = %s', (session['userid'],))
+        todo_tasks = cursor.fetchall()
 
-        cursor.execute('SELECT * FROM DoneTask '
+        cursor.execute('SELECT id, title, description, deadline, creation_time, done_time, task_type '
+                       'FROM DoneTask '
                        'WHERE user_id = % s', (session['userid'],))
         done_tasks = cursor.fetchall()
 
@@ -238,8 +237,8 @@ def finish_task():
 
     cursor.execute('INSERT INTO DoneTask(id, title, description, deadline, '
                    'creation_time, done_time, user_id, task_type)'
-                   'VALUES (% s, % s, % s, % s, % s, % s, % s, % s)',
-                   (task_id, title, description, deadline, creation_time, done_time, user_id, task_type, ))
+                   'VALUES (NULL, % s, % s, % s, % s, % s, % s, % s)',
+                   (title, description, deadline, creation_time, done_time, user_id, task_type, ))
 
     cursor.execute('DELETE FROM TodoTask '
                    'WHERE id = % s', (task_id, ))

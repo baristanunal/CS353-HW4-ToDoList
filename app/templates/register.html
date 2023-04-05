@@ -1,23 +1,40 @@
-<form action="{{ url_for('register') }}" method="post">
-	{% if message is defined and message %}
-		<div class="alert alert-warning">{{ message }}</div>
-	{% endif %}
-	<div class="form-group">
-		<label for="username">Username:</label>
-		<input type="text" class="form-control" id="username" name="username" placeholder="Enter name">
-	</div>
-	<div class="form-group">
-		<label for="email">Email:</label>
-		<input type="email" class="form-control" id="email" name="email" placeholder="Enter email">
-	</div>
-	<div class="form-group">
-		<label for="pwd">Password:</label>
-		<input type="password" class="form-control" id="password" name="password" placeholder="Enter password">
-	</div>  
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Register</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+	<div class="container mt-5">
+		<div class="row justify-content-center">
+			<div class="col-md-6">
+				<h2 class="text-center mb-3">Register</h2>
+				<form action="{{ url_for('register') }}" method="post">
+					{% if message is defined and message %}
+					<div class="alert alert-warning">{{ message }}</div>
+					{% endif %}
+					<div class="form-group">
+						<label for="username">Username:</label>
+						<input type="text" class="form-control" id="username" name="username" placeholder="Enter username">
+					</div>
+					<div class="form-group">
+						<label for="email">Email:</label>
+						<input type="email" class="form-control" id="email" name="email" placeholder="Enter email">
+					</div>
+					<div class="form-group">
+						<label for="password">Password:</label>
+						<input type="password" class="form-control" id="password" name="password" placeholder="Enter password">
+					</div>
 
-	<button type="submit" class="btn btn-primary">Register</button>		
-</form>
-
-<form action="{{ url_for('login') }}" method="get">
-<button class="btn btn-primary">Login</button>
-</form>
+					<div class="form-group mt-4">
+						<button type="submit" class="btn btn-primary btn-block">Register</button>
+					</div>
+				</form>
+				<div class="text-center mt-3">
+					Already have an account? <a href="{{ url_for('login') }}">Login</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

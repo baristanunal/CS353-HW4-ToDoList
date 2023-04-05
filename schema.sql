@@ -27,7 +27,7 @@ CREATE TABLE TodoTask(
 );
 
 CREATE TABLE DoneTask(
-	id int NOT NULL,
+	id int NOT NULL AUTO_INCREMENT,
     title varchar(255),
     description text,
     deadline datetime,

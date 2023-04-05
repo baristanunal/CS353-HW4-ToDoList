@@ -1,85 +1,96 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Tasks</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='tasks.css') }}">
+  </head>
 
-<style>
-  table, th, td {
-    border: 1px solid white;
-    border-collapse: collapse;
-    border-bottom: 1px solid #DDD;
-  }
-  th, td {
-    #background-color: #A3DEFB;
-    padding: 15px;
-  }
-  tr:hover {background-color: #D6EEEE;}
-</style>
-
-<body>
-
-  <div>
-    <h2>ACTIVE TASKS</h2>
-    <table>
-      <tr>
-        {% for column_name in todo_tasks[0] %}
-          <th>{{ column_name }}</th>
-        {% endfor %}
-      </tr>
-
-      {% for row in todo_tasks %}
-        <tr>
-          {% for cell in row %}
-            <td>
-              {{ row[cell] }}
-            </td>
-          {% endfor %}
-          <td>
-            <form action="{{ url_for('view_edit_task') }}" method="post">
-              <button class="btn btn-primary">Edit</button>
-              <input type="hidden" class="form-control" id="task_id" name="task_id" value={{ row["id"] }}>
+  <body>
+    <header>
+      <h1>My Tasks</h1>
+      <nav>
+        <ul>
+          <li>
+            <form action="{{ url_for('add_task') }}" method="get">
+              <button>Add Task</button>
             </form>
-            <form action="{{ url_for('finish_task') }}" method="post">
-              <button class="btn btn-primary">Done</button>
-              <input type="hidden" class="form-control" id="task_id" name="task_id" value={{ row["id"] }}>
+          </li>
+          <li>
+            <form action="{{ url_for('analysis') }}" method="get">
+              <button>Analysis Page</button>
             </form>
-            <form action="{{ url_for('delete_task') }}" method="post">
-              <button class="btn btn-primary">Delete</button>
-              <input type="hidden" class="form-control" id="task_id" name="task_id" value={{ row["id"] }}>
+          </li>
+          <li>
+            <form action="{{ url_for('logout') }}" method="get">
+              <button>Logout</button>
             </form>
-          </td>
-        </tr>
-      {% endfor %}
-    </table>
-  </div>
+          </li>
+        </ul>
+      </nav>
+    </header>
 
-  <form action="{{ url_for('add_task') }}" method="get">
-    <button class="btn btn-primary">Add Task</button>
-  </form>
+    <main>
+      <section>
+        <h2>Active Tasks</h2>
+        <table>
+          <thead>
+            <tr>
+              {% for column_name in todo_tasks[0] %}
+                <th>{{ column_name }}</th>
+              {% endfor %}
+              <th>Action</th>
+            </tr>
+          </thead>
 
-  <h2>DONE TASKS</h2>
-    <table>
-      <tr>
-        {% for column_name in done_tasks[0] %}
-          <th>{{ column_name }}</th>
-        {% endfor %}
-      </tr>
+          <tbody>
+            {% for row in todo_tasks %}
+              <tr>
+                {% for cell in row %}
+                  <td>{{ row[cell] }}</td>
+                {% endfor %}
+                <td>
+                  <form action="{{ url_for('view_edit_task') }}" method="post">
+                    <button>Edit</button>
+                    <input type="hidden" name="task_id" value="{{ row['id'] }}">
+                  </form>
+                  <form action="{{ url_for('finish_task') }}" method="post">
+                    <button>Done</button>
+                    <input type="hidden" name="task_id" value="{{ row['id'] }}">
+                  </form>
+                  <form action="{{ url_for('delete_task') }}" method="post">
+                    <button>Delete</button>
+                    <input type="hidden" name="task_id" value="{{ row['id'] }}">
+                  </form>
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </section>
 
-      {% for row in done_tasks %}
-        <tr>
-          {% for cell in row %}
-            <td>
-              {{ row[cell] }}
-            </td>
-          {% endfor %}
-        </tr>
-      {% endfor %}
-    </table>
+      <section>
+        <h2>Done Tasks</h2>
+        <table>
+          <thead>
+            <tr>
+              {% for column_name in done_tasks[0] %}
+                <th>{{ column_name }}</th>
+              {% endfor %}
+            </tr>
+          </thead>
 
-  <form action="{{ url_for('analysis') }}" method="get">
-    <button class="btn btn-primary">Analysis Page</button>
-  </form>
-
-  <form action="{{ url_for('logout') }}" method="get">
-    <button class="btn btn-primary">Logout</button>
-  </form>
-
-</body>
+          <tbody>
+            {% for row in done_tasks %}
+              <tr>
+                {% for cell in row %}
+                  <td>{{ row[cell] }}</td>
+                {% endfor %}
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </section>
+    </main>
+  </body>
+</html>
