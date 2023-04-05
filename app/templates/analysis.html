@@ -2,23 +2,16 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<style>
-  table, th, td {
-    border: 1px solid white;
-    border-collapse: collapse;
-    border-bottom: 1px solid #DDD;
-  }
-  th, td {
-    #background-color: #A3DEFB;
-    padding: 15px;
-  }
-  tr:hover {background-color: #D6EEEE;}
-</style>
+  <head>
+    <meta charset="UTF-8">
+    <title>Analysis</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='analysis.css') }}">
+  </head>
 
 <body>
 
 <form action="{{ url_for('tasks') }}" method="get">
-  <button class="btn btn-primary">Back</button>
+  <button class="btn btn-primary">Go Back</button>
 </form>
 
     <div>
