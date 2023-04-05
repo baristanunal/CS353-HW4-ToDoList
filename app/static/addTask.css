@@ -17,6 +17,11 @@ form {
   background-color: #fff;
 }
 
+h1{
+  margin: 50px auto;
+  max-width: 500px;
+}
+
 .form-group {
   margin-bottom: 20px;
 }

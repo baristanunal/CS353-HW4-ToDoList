@@ -101,6 +101,15 @@ form button {
   margin-right: 10px;
 }
 
+form button[type="submit"][value="Done"] {
+  background-color: #28a745;
+}
+
+form button[type="submit"][value="Delete"] {
+  background-color: #dc3545;
+  color: #fff;
+}
+
 form input[type="hidden"] {
   display: none;
 }

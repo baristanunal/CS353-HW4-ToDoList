@@ -53,6 +53,11 @@ p {
   width: 40%;
 }
 
+h1{
+  margin: 50px auto;
+  max-width: 225px;
+}
+
 th {
   background-color: #007bff;
   color: white;
