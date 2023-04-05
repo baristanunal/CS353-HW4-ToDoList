@@ -86,7 +86,7 @@ def register():
     elif request.method == 'POST':
         message = 'Please fill all the fields!'
 
-    return render_template('register.html', message = message)
+    return render_template('register.html', message=message)
 
 
 @app.route('/tasks', methods=['GET', 'POST'])
@@ -203,6 +203,7 @@ def edit_task():
         return render_template('viewEditTask.html', task_id=task_id, title=title, description=description,
                                deadline=deadline, task_type=task_type, message=message)
 
+
 @app.route('/delete_task', methods=['GET', 'POST'])
 def delete_task():
 
@@ -298,7 +299,6 @@ def analysis():
 
     else:
         return redirect(url_for('login'))
-
 
 
 if __name__ == "__main__":
