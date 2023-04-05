@@ -22,12 +22,13 @@ form {
 }
 
 label {
-  align-items: center;
+  display: inline-block;
   margin-bottom: 5px;
   font-weight: bold;
 }
 
 label.radio-label {
+  display: block;
   font-weight: normal;
 }
 
@@ -63,10 +64,6 @@ button[type="button"] {
 button[type="submit"]:hover,
 button[type="button"]:hover {
   background-color: #0069d9;
-}
-
-button[type="button"] {
-  background-color: #dc3545;
 }
 
 button[type="button"] {
