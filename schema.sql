@@ -1,11 +1,6 @@
 CREATE DATABASE IF NOT EXISTS cs353hw4db;
 USE cs353hw4db;
 
-DROP TABLE TodoTask;
-DROP TABLE DoneTask;
-DROP TABLE User;
-DROP TABLE TaskType;
-
 CREATE TABLE User(
 	id int NOT NULL AUTO_INCREMENT,
     password varchar(255),

@@ -1,5 +1,4 @@
 
-import re
 import os
 import datetime
 
@@ -96,12 +95,14 @@ def tasks():
 
         cursor.execute('SELECT id, title, description, deadline, creation_time, task_type '
                        'FROM TodoTask '
-                       'WHERE user_id = %s', (session['userid'],))
+                       'WHERE user_id = %s '
+                       'ORDER BY deadline ASC', (session['userid'],))
         todo_tasks = cursor.fetchall()
 
         cursor.execute('SELECT id, title, description, deadline, creation_time, done_time, task_type '
                        'FROM DoneTask '
-                       'WHERE user_id = % s', (session['userid'],))
+                       'WHERE user_id = % s '
+                       'ORDER BY done_time DESC', (session['userid'],))
         done_tasks = cursor.fetchall()
 
         return render_template('tasks.html', todo_tasks=todo_tasks, done_tasks=done_tasks, )
@@ -302,5 +303,5 @@ def analysis():
 
 
 if __name__ == "__main__":
-    port = int(os.environ.get('PORT', 8080))
+    port = int(os.environ.get('PORT', 5000))
     app.run(debug=True, host='0.0.0.0', port=port)
